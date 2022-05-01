@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { forwardRef, InputHTMLAttributes } from "react";
 
 const sizeTag = {
   tiny: "w-15",
@@ -21,17 +21,27 @@ interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" 
   classes?: string;
 }
 
-export default function Input({ size, maxLength, onChange, classes, align, ...props }: InputProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > maxLength) return;
-    onChange?.(e);
-  };
+const Input = forwardRef(
+  (
+    { size, maxLength, onChange, classes, align, ...props }: InputProps,
+    ref: React.ForwardedRef<HTMLInputElement>
+  ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length > maxLength) return;
+      onChange?.(e);
+    };
 
-  return (
-    <input
-      className={`input-basic ${classes} ${sizeTag[size]} ${alignTag[align]}`}
-      onChange={handleChange}
-      {...props}
-    />
-  );
-}
+    return (
+      <input
+        className={`input-basic ${classes} ${sizeTag[size]} ${alignTag[align]}`}
+        onChange={handleChange}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = "Input";
+
+export default Input;

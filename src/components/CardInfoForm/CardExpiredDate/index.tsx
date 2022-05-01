@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { useAutoFocus } from "../../../hooks/useAutoFocus";
 import { validateExpiredDateLength } from "../../../lib/validation";
 import { ExpiredDate } from "../../../types";
 import Input from "../../../common/Input";
@@ -13,6 +14,8 @@ interface CardExpiredDateProps {
 export default function CardExpiredDate({ expiredDate, onChange, isValid }: CardExpiredDateProps) {
   const [hasValue, setHasValue] = useState(false);
 
+  const { bindRefByIndex, handleAutoFocus } = useAutoFocus();
+
   useEffect(() => {
     setHasValue(validateExpiredDateLength(expiredDate));
   }, [expiredDate]);
@@ -24,11 +27,15 @@ export default function CardExpiredDate({ expiredDate, onChange, isValid }: Card
           type="text"
           placeholder="MM"
           maxLength={2}
-          onChange={onChange}
+          onChange={e => {
+            onChange(e);
+            handleAutoFocus(0, 2);
+          }}
           value={expiredDate.month || ""}
           style={{ paddingLeft: "40px" }}
           name="expiredDate"
           data-key="month"
+          ref={bindRefByIndex(0)}
         />
         <span className="expired-date-delimiter">/</span>
         <Input
@@ -40,6 +47,7 @@ export default function CardExpiredDate({ expiredDate, onChange, isValid }: Card
           style={{ paddingRight: "40px" }}
           name="expiredDate"
           data-key="year"
+          ref={bindRefByIndex(1)}
         />
       </div>
     </InputContainer>
