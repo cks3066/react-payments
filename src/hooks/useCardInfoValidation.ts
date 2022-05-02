@@ -4,6 +4,7 @@ import { Validators } from "../lib/validation";
 import { CardInfo } from "../types";
 
 export type CardInfoValidation = {
+  isCardTypeValid: boolean;
   isCardNumbersValid: boolean;
   isExpiredDateValid: boolean;
   isUserNameValid: boolean;
@@ -13,6 +14,7 @@ export type CardInfoValidation = {
 
 export const useCardInfoValidation = (cardInfo: CardInfo, validators: Validators) => {
   const [cardInfoValidation, setCardInfoValidation] = useState<CardInfoValidation>({
+    isCardTypeValid: false,
     isCardNumbersValid: false,
     isExpiredDateValid: false,
     isUserNameValid: false,
@@ -20,7 +22,7 @@ export const useCardInfoValidation = (cardInfo: CardInfo, validators: Validators
     isPasswordValid: false,
   });
 
-  const { cardNumbers, expiredDate, userName, securityCode, password } = cardInfo;
+  const { cardType, cardNumbers, expiredDate, userName, securityCode, password } = cardInfo;
 
   const handleChangeValidation = (key, value, validator) => {
     setCardInfoValidation(prev => ({
@@ -30,24 +32,28 @@ export const useCardInfoValidation = (cardInfo: CardInfo, validators: Validators
   };
 
   useEffect(() => {
+    handleChangeValidation("isCardTypeValid", cardNumbers, validators["cardNumbers"]);
+  }, [cardType]);
+
+  useEffect(() => {
     handleChangeValidation("isCardNumbersValid", cardNumbers, validators["cardNumbers"]);
-  }, [cardNumbers, validators]);
+  }, [cardNumbers]);
 
   useEffect(() => {
     handleChangeValidation("isExpiredDateValid", expiredDate, validators["expiredDate"]);
-  }, [expiredDate, validators]);
+  }, [expiredDate]);
 
   useEffect(() => {
     handleChangeValidation("isUserNameValid", userName, validators["userName"]);
-  }, [userName, validators]);
+  }, [userName]);
 
   useEffect(() => {
     handleChangeValidation("isSecurityCodeValid", securityCode, validators["securityCode"]);
-  }, [securityCode, validators]);
+  }, [securityCode]);
 
   useEffect(() => {
     handleChangeValidation("isPasswordValid", password, validators["password"]);
-  }, [password, validators]);
+  }, [password]);
 
   return cardInfoValidation;
 };

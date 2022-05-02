@@ -4,6 +4,7 @@ import REGEXP from "../constants/regexp";
 import { CardInfo, CardNumbers, Password } from "../types";
 
 const initialCardInfo: CardInfo = {
+  cardType: "",
   cardNumbers: ["", "", "", ""],
   expiredDate: { month: "", year: "" },
   userName: "",

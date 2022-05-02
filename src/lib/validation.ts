@@ -30,6 +30,8 @@ const validateDate = (expiredDate: ExpiredDate) => {
 
 const expiredDateValidators = [validateExpiredDateLength, validateMonth, validateDate];
 
+const validateCardType = (cardType: string) => cardType.length > 0;
+
 const validateExpiredDate = (expiredDate: ExpiredDate) =>
   expiredDateValidators.every(validator => validator(expiredDate));
 
@@ -40,6 +42,7 @@ const validateSecurityCode = (securityCode: string) => securityCode.length === 3
 const validatePassword = (password: Password) => password.every(number => number.length === 1);
 
 const cardInfoValidator = {
+  cardType: validateCardType,
   cardNumbers: validateCardNumbers,
   expiredDate: validateExpiredDate,
   userName: validateUserName,
