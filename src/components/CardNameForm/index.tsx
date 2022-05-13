@@ -17,33 +17,27 @@ export default function CardNameForm({ mode }) {
     setCardName(e.target.value);
   };
 
-  useEffect(() => {
-    if (cardName.length > 0) {
-      setIsNextButtonShown(true);
+  const onSubmit = e => {
+    e.preventDefault();
+    const cardData = { ...cardInfo, cardName };
 
-      return;
-    }
-    setIsNextButtonShown(false);
+    isAddMode
+      ? fetchAddCard(cardData).then(() => {
+          dispatch({ type: "RESET" });
+          navigate("/");
+        })
+      : fetchEditCard(cardData, id).then(() => {
+          dispatch({ type: "RESET" });
+          navigate("/");
+        });
+  };
+
+  useEffect(() => {
+    setIsNextButtonShown(cardName.length > 0);
   }, [cardName]);
 
   return (
-    <form
-      className="card-name-form h-100"
-      onSubmit={e => {
-        e.preventDefault();
-        const cardData = { ...cardInfo, cardName };
-
-        isAddMode
-          ? fetchAddCard(cardData).then(() => {
-              dispatch({ type: "RESET" });
-              navigate("/");
-            })
-          : fetchEditCard(cardData, id).then(() => {
-              dispatch({ type: "RESET" });
-              navigate("/");
-            });
-      }}
-    >
+    <form className="card-name-form h-100" onSubmit={onSubmit}>
       <Input
         shape="input-underline"
         placeholder="카드 이름을 입력해주세요."

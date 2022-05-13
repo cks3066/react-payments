@@ -8,7 +8,7 @@ import UserGuide from "../../../common/UserGuide";
 import { Context } from "../../../contexts/CardContext";
 
 interface CardSecurityProps {
-  validateFormValidation: (key: string, isValid: boolean) => void;
+  validateForm: (key: string, isValid: boolean) => void;
 }
 
 const checkSecurityCode = (securityCode: string) => {
@@ -17,7 +17,7 @@ const checkSecurityCode = (securityCode: string) => {
   }
 };
 
-export default function CardSecurityCode({ validateFormValidation }: CardSecurityProps) {
+export default function CardSecurityCode({ validateForm }: CardSecurityProps) {
   const { inputValidation, validateInput, isValidInput } = useInputValidation(false);
   const [cardInfo, dispatch] = useContext(Context);
   const { securityCode } = cardInfo;
@@ -26,7 +26,7 @@ export default function CardSecurityCode({ validateFormValidation }: CardSecurit
     const targetSecurityCode: string = e.target.value;
 
     validateInput(targetSecurityCode, checkSecurityCode);
-    validateFormValidation("securityCode", isValidInput(targetSecurityCode, checkSecurityCode));
+    validateForm("securityCode", isValidInput(targetSecurityCode, checkSecurityCode));
 
     dispatch({ type: "UPDATE_SECURITY_CODE", payload: { securityCode: targetSecurityCode } });
   };

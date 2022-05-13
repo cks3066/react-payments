@@ -7,7 +7,7 @@ import InputContainer from "../../../common/InputContainer";
 import { Context } from "../../../contexts/CardContext";
 
 interface CardNumberProps {
-  validateFormValidation: (key: string, isValid: boolean) => void;
+  validateForm: (key: string, isValid: boolean) => void;
 }
 
 const checkCardNumbers = (cardNumbers: CardNumbers) => {
@@ -16,7 +16,7 @@ const checkCardNumbers = (cardNumbers: CardNumbers) => {
   }
 };
 
-export default function CardNumber({ validateFormValidation }: CardNumberProps) {
+export default function CardNumber({ validateForm }: CardNumberProps) {
   const { inputValidation, validateInput, isValidInput } = useInputValidation(false);
   const [cardInfo, dispatch] = useContext(Context);
   const { cardNumbers } = cardInfo;
@@ -29,7 +29,7 @@ export default function CardNumber({ validateFormValidation }: CardNumberProps) 
     targetCardNumbers[index] = value;
 
     validateInput(targetCardNumbers, checkCardNumbers);
-    validateFormValidation("cardNumbers", isValidInput(targetCardNumbers, checkCardNumbers));
+    validateForm("cardNumbers", isValidInput(targetCardNumbers, checkCardNumbers));
 
     dispatch({ type: "UPDATE_CARD_NUMBER", payload: { cardNumbers: value, index } });
   };

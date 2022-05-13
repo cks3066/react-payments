@@ -29,7 +29,7 @@ const focusNextInput = (e: React.FormEvent<HTMLFormElement>) => {
 export default function CardInfoForm({ cardTypeValidation = false, showModal, mode = "add" }) {
   const isAddMode = mode === "add";
   const [isNextButtonShown, setIsNextButtonShown] = useState(!isAddMode);
-  const { formValidation, validateFormValidation } = useFormValidation({
+  const { formValidation, validateForm } = useFormValidation({
     cardNumbers: false,
     expiredDate: false,
     userName: false,
@@ -58,11 +58,11 @@ export default function CardInfoForm({ cardTypeValidation = false, showModal, mo
 
   return (
     <form onChange={focusNextInput} onSubmit={onSubmit}>
-      <CardNumber validateFormValidation={validateFormValidation} />
-      <CardExpiredDate validateFormValidation={validateFormValidation} />
-      <CardUserName validateFormValidation={validateFormValidation} />
-      <CardSecurityCode validateFormValidation={validateFormValidation} />
-      <CardPassword validateFormValidation={validateFormValidation} />
+      <CardNumber validateForm={validateForm} />
+      <CardExpiredDate validateForm={validateForm} />
+      <CardUserName validateForm={validateForm} />
+      <CardSecurityCode validateForm={validateForm} />
+      <CardPassword validateForm={validateForm} />
       {isNextButtonShown && (
         <button type="submit" className="submit-button">
           다음

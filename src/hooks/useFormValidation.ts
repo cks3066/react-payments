@@ -3,7 +3,7 @@ import { useState } from "react";
 const useFormValidation = initialValidation => {
   const [formValidation, setFormValidation] = useState(initialValidation);
 
-  const validateFormValidation = (key, isValid) => {
+  const validateForm = (key, isValid) => {
     setFormValidation(prev => {
       const newFormValidation = { ...prev };
 
@@ -13,7 +13,7 @@ const useFormValidation = initialValidation => {
     });
   };
 
-  return { formValidation, validateFormValidation };
+  return { formValidation, validateForm };
 };
 
 export default useFormValidation;

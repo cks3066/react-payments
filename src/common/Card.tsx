@@ -31,8 +31,6 @@ export default function Card({
     },
   };
 
-  console.log();
-
   return (
     <div className="card-box">
       <div

@@ -7,7 +7,7 @@ import InputContainer from "../../../common/InputContainer";
 import { Context } from "../../../contexts/CardContext";
 
 interface CardUserNameProps {
-  validateFormValidation: (key: string, isValid: boolean) => void;
+  validateForm: (key: string, isValid: boolean) => void;
 }
 
 const checkCardUserName = (cardUserName: string) => {
@@ -16,7 +16,7 @@ const checkCardUserName = (cardUserName: string) => {
   }
 };
 
-export default function CardUserName({ validateFormValidation }: CardUserNameProps) {
+export default function CardUserName({ validateForm }: CardUserNameProps) {
   const { inputValidation, validateInput, isValidInput } = useInputValidation(false);
   const [cardInfo, dispatch] = useContext(Context);
   const { userName } = cardInfo;
@@ -25,7 +25,7 @@ export default function CardUserName({ validateFormValidation }: CardUserNamePro
     const targetCardUserName = e.target.value;
 
     validateInput(targetCardUserName, checkCardUserName);
-    validateFormValidation("userName", isValidInput(targetCardUserName, checkCardUserName));
+    validateForm("userName", isValidInput(targetCardUserName, checkCardUserName));
 
     dispatch({ type: "UPDATE_USER_NAME", payload: { userName: targetCardUserName } });
   };
